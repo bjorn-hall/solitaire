@@ -1,0 +1,435 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1DABA4F819CE3396003EE96A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DABA4F719CE3396003EE96A /* main.m */; };
+		1DABA4FB19CE3396003EE96A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DABA4FA19CE3396003EE96A /* AppDelegate.m */; };
+		1DABA4FE19CE3396003EE96A /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DABA4FD19CE3396003EE96A /* GameScene.m */; };
+		1DABA50019CE3396003EE96A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA4FF19CE3396003EE96A /* GameScene.sks */; };
+		1DABA50219CE3396003EE96A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA50119CE3396003EE96A /* Images.xcassets */; };
+		1DABA50519CE3396003EE96A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA50319CE3396003EE96A /* MainMenu.xib */; };
+		1DABA51119CE3396003EE96A /* gSolitaireTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DABA51019CE3396003EE96A /* gSolitaireTests.m */; };
+		1DABA51B19CE34C2003EE96A /* cards.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA51A19CE34C2003EE96A /* cards.atlas */; };
+		1DABA52619CE378D003EE96A /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DABA52519CE378D003EE96A /* Card.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1DABA50B19CE3396003EE96A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1DABA4EA19CE3396003EE96A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1DABA4F119CE3396003EE96A;
+			remoteInfo = gSolitaire;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1DABA4F219CE3396003EE96A /* gSolitaire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gSolitaire.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DABA4F619CE3396003EE96A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1DABA4F719CE3396003EE96A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1DABA4F919CE3396003EE96A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1DABA4FA19CE3396003EE96A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1DABA4FC19CE3396003EE96A /* GameScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
+		1DABA4FD19CE3396003EE96A /* GameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
+		1DABA4FF19CE3396003EE96A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		1DABA50119CE3396003EE96A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		1DABA50419CE3396003EE96A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		1DABA50A19CE3396003EE96A /* gSolitaireTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = gSolitaireTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DABA50F19CE3396003EE96A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1DABA51019CE3396003EE96A /* gSolitaireTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = gSolitaireTests.m; sourceTree = "<group>"; };
+		1DABA51A19CE34C2003EE96A /* cards.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards.atlas; sourceTree = "<group>"; };
+		1DABA52419CE378D003EE96A /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Card.h; sourceTree = "<group>"; };
+		1DABA52519CE378D003EE96A /* Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Card.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1DABA4EF19CE3396003EE96A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1DABA50719CE3396003EE96A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1DABA4E919CE3396003EE96A = {
+			isa = PBXGroup;
+			children = (
+				1DABA51A19CE34C2003EE96A /* cards.atlas */,
+				1DABA4F419CE3396003EE96A /* gSolitaire */,
+				1DABA50D19CE3396003EE96A /* gSolitaireTests */,
+				1DABA4F319CE3396003EE96A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1DABA4F319CE3396003EE96A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1DABA4F219CE3396003EE96A /* gSolitaire.app */,
+				1DABA50A19CE3396003EE96A /* gSolitaireTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1DABA4F419CE3396003EE96A /* gSolitaire */ = {
+			isa = PBXGroup;
+			children = (
+				1DABA4F919CE3396003EE96A /* AppDelegate.h */,
+				1DABA4FA19CE3396003EE96A /* AppDelegate.m */,
+				1DABA4FC19CE3396003EE96A /* GameScene.h */,
+				1DABA4FD19CE3396003EE96A /* GameScene.m */,
+				1DABA4FF19CE3396003EE96A /* GameScene.sks */,
+				1DABA50119CE3396003EE96A /* Images.xcassets */,
+				1DABA50319CE3396003EE96A /* MainMenu.xib */,
+				1DABA4F519CE3396003EE96A /* Supporting Files */,
+				1DABA52419CE378D003EE96A /* Card.h */,
+				1DABA52519CE378D003EE96A /* Card.m */,
+			);
+			path = gSolitaire;
+			sourceTree = "<group>";
+		};
+		1DABA4F519CE3396003EE96A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1DABA4F619CE3396003EE96A /* Info.plist */,
+				1DABA4F719CE3396003EE96A /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1DABA50D19CE3396003EE96A /* gSolitaireTests */ = {
+			isa = PBXGroup;
+			children = (
+				1DABA51019CE3396003EE96A /* gSolitaireTests.m */,
+				1DABA50E19CE3396003EE96A /* Supporting Files */,
+			);
+			path = gSolitaireTests;
+			sourceTree = "<group>";
+		};
+		1DABA50E19CE3396003EE96A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1DABA50F19CE3396003EE96A /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1DABA4F119CE3396003EE96A /* gSolitaire */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DABA51419CE3396003EE96A /* Build configuration list for PBXNativeTarget "gSolitaire" */;
+			buildPhases = (
+				1DABA4EE19CE3396003EE96A /* Sources */,
+				1DABA4EF19CE3396003EE96A /* Frameworks */,
+				1DABA4F019CE3396003EE96A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = gSolitaire;
+			productName = gSolitaire;
+			productReference = 1DABA4F219CE3396003EE96A /* gSolitaire.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1DABA50919CE3396003EE96A /* gSolitaireTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DABA51719CE3396003EE96A /* Build configuration list for PBXNativeTarget "gSolitaireTests" */;
+			buildPhases = (
+				1DABA50619CE3396003EE96A /* Sources */,
+				1DABA50719CE3396003EE96A /* Frameworks */,
+				1DABA50819CE3396003EE96A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1DABA50C19CE3396003EE96A /* PBXTargetDependency */,
+			);
+			name = gSolitaireTests;
+			productName = gSolitaireTests;
+			productReference = 1DABA50A19CE3396003EE96A /* gSolitaireTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1DABA4EA19CE3396003EE96A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = "Björn Hall";
+				TargetAttributes = {
+					1DABA4F119CE3396003EE96A = {
+						CreatedOnToolsVersion = 6.0.1;
+					};
+					1DABA50919CE3396003EE96A = {
+						CreatedOnToolsVersion = 6.0.1;
+						TestTargetID = 1DABA4F119CE3396003EE96A;
+					};
+				};
+			};
+			buildConfigurationList = 1DABA4ED19CE3396003EE96A /* Build configuration list for PBXProject "gSolitaire" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1DABA4E919CE3396003EE96A;
+			productRefGroup = 1DABA4F319CE3396003EE96A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1DABA4F119CE3396003EE96A /* gSolitaire */,
+				1DABA50919CE3396003EE96A /* gSolitaireTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1DABA4F019CE3396003EE96A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DABA50019CE3396003EE96A /* GameScene.sks in Resources */,
+				1DABA50219CE3396003EE96A /* Images.xcassets in Resources */,
+				1DABA50519CE3396003EE96A /* MainMenu.xib in Resources */,
+				1DABA51B19CE34C2003EE96A /* cards.atlas in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1DABA50819CE3396003EE96A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1DABA4EE19CE3396003EE96A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DABA4FB19CE3396003EE96A /* AppDelegate.m in Sources */,
+				1DABA4FE19CE3396003EE96A /* GameScene.m in Sources */,
+				1DABA4F819CE3396003EE96A /* main.m in Sources */,
+				1DABA52619CE378D003EE96A /* Card.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1DABA50619CE3396003EE96A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DABA51119CE3396003EE96A /* gSolitaireTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1DABA50C19CE3396003EE96A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1DABA4F119CE3396003EE96A /* gSolitaire */;
+			targetProxy = 1DABA50B19CE3396003EE96A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1DABA50319CE3396003EE96A /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DABA50419CE3396003EE96A /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DABA51219CE3396003EE96A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		1DABA51319CE3396003EE96A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		1DABA51519CE3396003EE96A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = gSolitaire/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1DABA51619CE3396003EE96A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = gSolitaire/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		1DABA51819CE3396003EE96A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = gSolitaireTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/gSolitaire.app/Contents/MacOS/gSolitaire";
+			};
+			name = Debug;
+		};
+		1DABA51919CE3396003EE96A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = gSolitaireTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/gSolitaire.app/Contents/MacOS/gSolitaire";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DABA4ED19CE3396003EE96A /* Build configuration list for PBXProject "gSolitaire" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DABA51219CE3396003EE96A /* Debug */,
+				1DABA51319CE3396003EE96A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DABA51419CE3396003EE96A /* Build configuration list for PBXNativeTarget "gSolitaire" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DABA51519CE3396003EE96A /* Debug */,
+				1DABA51619CE3396003EE96A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DABA51719CE3396003EE96A /* Build configuration list for PBXNativeTarget "gSolitaireTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DABA51819CE3396003EE96A /* Debug */,
+				1DABA51919CE3396003EE96A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1DABA4EA19CE3396003EE96A /* Project object */;
+}
