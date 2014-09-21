@@ -1,0 +1,4 @@
+solitaire
+=========
+
+Spritekit solitaire game
