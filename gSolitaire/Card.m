@@ -12,26 +12,24 @@
 {
   enum Color color;
   enum Value value;
+  CGPoint pos;
 }
 
--(id)init
+-(void)setCardPosition:(CGPoint) p
 {
-  self = [super init];
-
-  color = Heart;
-  value = Two;
-
-  return self;
-
+  pos.x = p.x;
+  pos.y = p.y;
 }
 
--(id)initWithCard:(enum Color) c: (enum Value) v
+-(id)initWithCard:(enum Color)c andvalue:(enum Value)v
 {
-  self = [super initWithImageNamed:[self getCardString:c :v]];
+  NSString *ns = [self getCardString:c andvalue:v];
+  self = [super initWithImageNamed:ns];
 
   if(self) {
-    self.scale = 0.25;
-    self.position = CGPointMake(100, 100);
+    self.scale = 0.75;
+    color = c;
+    value = v;
   }
 
   return self;
@@ -39,10 +37,10 @@
 
 -(void)print
 {
-  NSLog([self getCardString:color :value]);
+  NSLog([self getCardString:color andvalue:value]);
 }
 
--(NSString*)getCardString: (enum Color) c: (enum Value)v
+-(NSString*)getCardString:(enum Color)c andvalue:(enum Value)v
 {
   NSString *s;
 
@@ -87,6 +85,9 @@
     case King:
       s = @"king_of_";
       break;
+    default:
+      NSLog(@"Unknown card value");
+      break;
   }
 
   switch(c)
@@ -102,6 +103,9 @@
       break;
     case Spade:
       s = [s stringByAppendingString:@"spades"];
+      break;
+    default:
+      NSLog(@"Unknown card color");
       break;
   }
 

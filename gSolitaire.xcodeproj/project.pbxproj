@@ -14,8 +14,9 @@
 		1DABA50219CE3396003EE96A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA50119CE3396003EE96A /* Images.xcassets */; };
 		1DABA50519CE3396003EE96A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA50319CE3396003EE96A /* MainMenu.xib */; };
 		1DABA51119CE3396003EE96A /* gSolitaireTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DABA51019CE3396003EE96A /* gSolitaireTests.m */; };
-		1DABA51B19CE34C2003EE96A /* cards.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA51A19CE34C2003EE96A /* cards.atlas */; };
 		1DABA52619CE378D003EE96A /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DABA52519CE378D003EE96A /* Card.m */; };
+		1DABA52F19CF0AC1003EE96A /* Pile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DABA52E19CF0AC1003EE96A /* Pile.m */; };
+		1DABA62919D2266E003EE96A /* cards.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA62819D2266E003EE96A /* cards.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,9 +43,11 @@
 		1DABA50A19CE3396003EE96A /* gSolitaireTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = gSolitaireTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DABA50F19CE3396003EE96A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1DABA51019CE3396003EE96A /* gSolitaireTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = gSolitaireTests.m; sourceTree = "<group>"; };
-		1DABA51A19CE34C2003EE96A /* cards.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards.atlas; sourceTree = "<group>"; };
 		1DABA52419CE378D003EE96A /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Card.h; sourceTree = "<group>"; };
 		1DABA52519CE378D003EE96A /* Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Card.m; sourceTree = "<group>"; };
+		1DABA52D19CF0AC1003EE96A /* Pile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pile.h; sourceTree = "<group>"; };
+		1DABA52E19CF0AC1003EE96A /* Pile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pile.m; sourceTree = "<group>"; };
+		1DABA62819D2266E003EE96A /* cards.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,7 +71,7 @@
 		1DABA4E919CE3396003EE96A = {
 			isa = PBXGroup;
 			children = (
-				1DABA51A19CE34C2003EE96A /* cards.atlas */,
+				1DABA62819D2266E003EE96A /* cards.atlas */,
 				1DABA4F419CE3396003EE96A /* gSolitaire */,
 				1DABA50D19CE3396003EE96A /* gSolitaireTests */,
 				1DABA4F319CE3396003EE96A /* Products */,
@@ -97,6 +100,8 @@
 				1DABA4F519CE3396003EE96A /* Supporting Files */,
 				1DABA52419CE378D003EE96A /* Card.h */,
 				1DABA52519CE378D003EE96A /* Card.m */,
+				1DABA52D19CF0AC1003EE96A /* Pile.h */,
+				1DABA52E19CF0AC1003EE96A /* Pile.m */,
 			);
 			path = gSolitaire;
 			sourceTree = "<group>";
@@ -210,7 +215,7 @@
 				1DABA50019CE3396003EE96A /* GameScene.sks in Resources */,
 				1DABA50219CE3396003EE96A /* Images.xcassets in Resources */,
 				1DABA50519CE3396003EE96A /* MainMenu.xib in Resources */,
-				1DABA51B19CE34C2003EE96A /* cards.atlas in Resources */,
+				1DABA62919D2266E003EE96A /* cards.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,6 +233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DABA52F19CF0AC1003EE96A /* Pile.m in Sources */,
 				1DABA4FB19CE3396003EE96A /* AppDelegate.m in Sources */,
 				1DABA4FE19CE3396003EE96A /* GameScene.m in Sources */,
 				1DABA4F819CE3396003EE96A /* main.m in Sources */,
