@@ -25,17 +25,38 @@
 
 - (void)addPiles {
   for(int i = 0; i < 7; i++) {
-    [piles addObject:[[Pile alloc] initWithPosition:CGPointMake(100+(i*140), 600)]];
+    [piles addObject:[[Pile alloc] initWithPosition:CGPointMake(100+(i*120), 600)]];
   }
 }
 
 - (void)dealCards {
-  for(Pile *p in piles) {
-    Card *c = [deck objectAtIndex:0];
-    Card *d = [c copy];
-    [d setPosition:[p getPosition]];
-    [deck removeObjectAtIndex:0];
-    [p addCard:d ];
+  for(int i = 0; i < 7; i++) {
+    NSEnumerator *enumerator = [piles objectEnumerator];
+    Pile *p;
+    for(int j = 0; j < i; j++) {[enumerator nextObject];}
+    while (p = [enumerator nextObject]) {
+      Card *c = [deck objectAtIndex:0];
+      Card *d = [c copy];
+
+      CGPoint cgp = [p getPosition];
+
+      cgp.y -= i*30;
+
+      /* TODO: Is this the best way to handle this? */
+      d.zPosition = 600-cgp.y;
+
+      [d setCardPosition:cgp];
+      [deck removeObjectAtIndex:0];
+      [p addCard:d];
+    }
+
+/*    for(Pile *p in piles) {
+      Card *c = [deck objectAtIndex:0];
+      Card *d = [c copy];
+      [d setCardPosition:[p getPosition]];
+      [deck removeObjectAtIndex:0];
+      [p addCard:d];
+    }*/
   }
 }
 
@@ -47,6 +68,11 @@
 
   [self addCardsToDeck];
 
+  for (int x = 0; x < [deck count]; x++) {
+    int randInt = (arc4random() % ([deck count] - x)) + x;
+    [deck exchangeObjectAtIndex:x withObjectAtIndex:randInt];
+  }
+
   [self addPiles];
 
   [self dealCards];
@@ -54,7 +80,6 @@
   for(Pile *p in piles) {
     for(Card *c in [p getCardArray]) {
       [self addChild:c];
-      break;
     }
   }
 }

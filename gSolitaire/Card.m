@@ -9,16 +9,25 @@
 #import "Card.h"
 
 @implementation Card
-{
-  enum Color color;
-  enum Value value;
-  CGPoint pos;
-}
+
+@synthesize cardColor;
+@synthesize cardValue;
 
 -(void)setCardPosition:(CGPoint) p
 {
   pos.x = p.x;
   pos.y = p.y;
+  self.position = p;
+}
+
+-(id)copyWithZone:(NSZone *)zone
+{
+  Card *c = [super copyWithZone:zone];
+  //c = [[Card alloc] initWithCard:self.color andvalue:self.value];
+  c.cardColor = self.cardColor;
+  c.cardValue = self.cardValue;
+
+  return c;
 }
 
 -(id)initWithCard:(enum Color)c andvalue:(enum Value)v
@@ -27,9 +36,10 @@
   self = [super initWithImageNamed:ns];
 
   if(self) {
-    self.scale = 0.75;
-    color = c;
-    value = v;
+    self.name = ns;
+    self.scale = 1;
+    cardColor = c;
+    cardValue = v;
   }
 
   return self;
@@ -37,7 +47,7 @@
 
 -(void)print
 {
-  NSLog([self getCardString:color andvalue:value]);
+  NSLog([self getCardString:cardColor andvalue:cardValue]);
 }
 
 -(NSString*)getCardString:(enum Color)c andvalue:(enum Value)v

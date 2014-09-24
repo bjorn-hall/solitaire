@@ -16,7 +16,10 @@
 		1DABA51119CE3396003EE96A /* gSolitaireTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DABA51019CE3396003EE96A /* gSolitaireTests.m */; };
 		1DABA52619CE378D003EE96A /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DABA52519CE378D003EE96A /* Card.m */; };
 		1DABA52F19CF0AC1003EE96A /* Pile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DABA52E19CF0AC1003EE96A /* Pile.m */; };
-		1DABA62919D2266E003EE96A /* cards.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA62819D2266E003EE96A /* cards.atlas */; };
+		1DABA63519D34D23003EE96A /* clubs.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA63419D34D23003EE96A /* clubs.atlas */; };
+		1DABA63719D355FB003EE96A /* diamonds.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA63619D355FB003EE96A /* diamonds.atlas */; };
+		1DABA63919D35752003EE96A /* hearts.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA63819D35752003EE96A /* hearts.atlas */; };
+		1DABA63B19D3583C003EE96A /* spades.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA63A19D3583C003EE96A /* spades.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +50,10 @@
 		1DABA52519CE378D003EE96A /* Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Card.m; sourceTree = "<group>"; };
 		1DABA52D19CF0AC1003EE96A /* Pile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pile.h; sourceTree = "<group>"; };
 		1DABA52E19CF0AC1003EE96A /* Pile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pile.m; sourceTree = "<group>"; };
-		1DABA62819D2266E003EE96A /* cards.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards.atlas; sourceTree = "<group>"; };
+		1DABA63419D34D23003EE96A /* clubs.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = clubs.atlas; sourceTree = "<group>"; };
+		1DABA63619D355FB003EE96A /* diamonds.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = diamonds.atlas; sourceTree = "<group>"; };
+		1DABA63819D35752003EE96A /* hearts.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = hearts.atlas; sourceTree = "<group>"; };
+		1DABA63A19D3583C003EE96A /* spades.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = spades.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +77,10 @@
 		1DABA4E919CE3396003EE96A = {
 			isa = PBXGroup;
 			children = (
-				1DABA62819D2266E003EE96A /* cards.atlas */,
+				1DABA63A19D3583C003EE96A /* spades.atlas */,
+				1DABA63819D35752003EE96A /* hearts.atlas */,
+				1DABA63619D355FB003EE96A /* diamonds.atlas */,
+				1DABA63419D34D23003EE96A /* clubs.atlas */,
 				1DABA4F419CE3396003EE96A /* gSolitaire */,
 				1DABA50D19CE3396003EE96A /* gSolitaireTests */,
 				1DABA4F319CE3396003EE96A /* Products */,
@@ -212,10 +221,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DABA63719D355FB003EE96A /* diamonds.atlas in Resources */,
+				1DABA63B19D3583C003EE96A /* spades.atlas in Resources */,
 				1DABA50019CE3396003EE96A /* GameScene.sks in Resources */,
+				1DABA63519D34D23003EE96A /* clubs.atlas in Resources */,
 				1DABA50219CE3396003EE96A /* Images.xcassets in Resources */,
+				1DABA63919D35752003EE96A /* hearts.atlas in Resources */,
 				1DABA50519CE3396003EE96A /* MainMenu.xib in Resources */,
-				1DABA62919D2266E003EE96A /* cards.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
