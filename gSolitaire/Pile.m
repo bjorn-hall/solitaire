@@ -19,6 +19,42 @@
   return pilePosition;
 }
 
+-(NSMutableArray*)getCardsBelow:(Card*)c
+{
+  bool foundCard = false;
+  NSMutableArray *array = [[NSMutableArray alloc] init];
+
+  NSEnumerator *enumerator = [cards objectEnumerator];
+
+  Card *card;
+  int i = 0;
+  while(card = [enumerator nextObject]) {
+    if(foundCard || (card.cardColor == c.cardColor && card.cardValue == c.cardValue)) {
+      [array addObject:card];
+      foundCard = true;
+    }
+  }
+
+  if(foundCard) {
+    return array;
+  }
+  return NULL;
+}
+
+-(BOOL)isCardInPile:(Card*)c
+{
+  NSEnumerator *enumerator = [cards objectEnumerator];
+
+  Card *card;
+  while(card = [enumerator nextObject]) {
+    if(card.cardColor == c.cardColor && card.cardValue == c.cardValue) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 -(id) init
 {
   self = [super init];

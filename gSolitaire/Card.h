@@ -26,5 +26,6 @@ enum Value {Ace=0, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Q
 -(NSString*)getCardString:(enum Color)c andvalue:(enum Value)v;
 -(void)print;
 -(void)setCardPosition:(CGPoint) p;
+-(CGPoint)getCardPosition;
 
 @end

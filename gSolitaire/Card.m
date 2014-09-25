@@ -30,6 +30,11 @@
   return c;
 }
 
+-(CGPoint)getCardPosition
+{
+  return pos;
+}
+
 -(id)initWithCard:(enum Color)c andvalue:(enum Value)v
 {
   NSString *ns = [self getCardString:c andvalue:v];

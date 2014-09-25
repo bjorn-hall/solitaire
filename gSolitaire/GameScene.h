@@ -11,4 +11,8 @@
 
 @interface GameScene : SKScene
 
+-(void)positionDraggedCards:(CGPoint)point;
+-(void)makeStackOnTop:(NSMutableArray*)array;
+-(void)restoreZPosition:(NSMutableArray*)array;
+
 @end

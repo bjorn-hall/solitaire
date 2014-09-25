@@ -13,6 +13,9 @@
 {
   NSMutableArray *deck;
   NSMutableArray *piles;
+  NSMutableArray *draggedCards;
+  CGPoint clickOffset;
+  CGPoint originPoint;
 }
 
 - (void)addCardsToDeck {
@@ -49,20 +52,10 @@
       [deck removeObjectAtIndex:0];
       [p addCard:d];
     }
-
-/*    for(Pile *p in piles) {
-      Card *c = [deck objectAtIndex:0];
-      Card *d = [c copy];
-      [d setCardPosition:[p getPosition]];
-      [deck removeObjectAtIndex:0];
-      [p addCard:d];
-    }*/
   }
 }
 
 -(void)didMoveToView:(SKView *)view {
-  /* Setup your scene here */
-
   deck =  [[NSMutableArray alloc] init];
   piles = [[NSMutableArray alloc] init];
 
@@ -84,21 +77,80 @@
   }
 }
 
+-(void)makeStackOnTop:(NSMutableArray*)array
+{
+  NSEnumerator *enumerator = [array objectEnumerator];
+
+  Card *c;
+  while(c = [enumerator nextObject]) {
+    c.zPosition += 1000;
+  }
+}
+
+-(void)restoreZPosition:(NSMutableArray*)array
+{
+  NSEnumerator *enumerator = [array objectEnumerator];
+
+  Card *c;
+  while(c = [enumerator nextObject]) {
+    c.zPosition -= 1000;
+  }
+}
+
+
+-(void)mouseDragged:(NSEvent *)theEvent
+{
+  CGPoint currentPosition = [theEvent locationInNode:self];
+  currentPosition.x -= clickOffset.x;
+  currentPosition.y -= clickOffset.y;
+  [self positionDraggedCards:currentPosition];
+}
+
 -(void)mouseDown:(NSEvent *)theEvent {
-     /* Called when a mouse click occurs */
   Card *clicked_card;
   CGPoint clicked_position;
 
   clicked_position = [theEvent locationInNode:self];
 
-  clicked_card = [self nodeAtPoint:clicked_position];
+  clicked_card = (Card*)[self nodeAtPoint:clicked_position];
+  clickOffset = [theEvent locationInNode:clicked_card];
+
+  NSEnumerator *enumerator = [piles objectEnumerator];
+
+  Pile *p;
+  while(p = [enumerator nextObject]) {
+    if([p isCardInPile:clicked_card]) {
+      draggedCards = [p getCardsBelow:clicked_card];
+    }
+  }
+
+  originPoint = [[draggedCards objectAtIndex:0] getCardPosition];
+
+  [self makeStackOnTop:draggedCards];
 
   [clicked_card print];
 
 }
 
+-(void)mouseUp:(NSEvent *)theEvent
+{
+  [self positionDraggedCards:originPoint];
+  draggedCards = NULL;
+}
+
+-(void)positionDraggedCards:(CGPoint)point
+{
+  NSEnumerator *enumerator = [draggedCards objectEnumerator];
+
+  Card *c;
+  while(c = [enumerator nextObject]) {
+    c.position = point;
+    point.y -= 30;
+  }
+  [self makeStackOnTop:draggedCards];
+}
+
 -(void)update:(CFTimeInterval)currentTime {
-    /* Called before each frame is rendered */
 }
 
 @end
