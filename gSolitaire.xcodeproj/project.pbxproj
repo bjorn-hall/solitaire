@@ -20,6 +20,7 @@
 		1DABA63719D355FB003EE96A /* diamonds.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA63619D355FB003EE96A /* diamonds.atlas */; };
 		1DABA63919D35752003EE96A /* hearts.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA63819D35752003EE96A /* hearts.atlas */; };
 		1DABA63B19D3583C003EE96A /* spades.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA63A19D3583C003EE96A /* spades.atlas */; };
+		1DABA63D19D607F8003EE96A /* wood_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA63C19D607F8003EE96A /* wood_background.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		1DABA63619D355FB003EE96A /* diamonds.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = diamonds.atlas; sourceTree = "<group>"; };
 		1DABA63819D35752003EE96A /* hearts.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = hearts.atlas; sourceTree = "<group>"; };
 		1DABA63A19D3583C003EE96A /* spades.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = spades.atlas; sourceTree = "<group>"; };
+		1DABA63C19D607F8003EE96A /* wood_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood_background.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		1DABA4E919CE3396003EE96A = {
 			isa = PBXGroup;
 			children = (
+				1DABA63C19D607F8003EE96A /* wood_background.png */,
 				1DABA63A19D3583C003EE96A /* spades.atlas */,
 				1DABA63819D35752003EE96A /* hearts.atlas */,
 				1DABA63619D355FB003EE96A /* diamonds.atlas */,
@@ -227,6 +230,7 @@
 				1DABA63519D34D23003EE96A /* clubs.atlas in Resources */,
 				1DABA50219CE3396003EE96A /* Images.xcassets in Resources */,
 				1DABA63919D35752003EE96A /* hearts.atlas in Resources */,
+				1DABA63D19D607F8003EE96A /* wood_background.png in Resources */,
 				1DABA50519CE3396003EE96A /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

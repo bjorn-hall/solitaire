@@ -24,9 +24,12 @@
 }
 
 - (void)addCardsToDeck {
+  Card *c;
   for(int color = 0; color < 4; color++) {
     for(int value = 0; value < 13; value++) {
-      [deck addObject:[[Card alloc] initWithCard:color andvalue:value]];
+      c = [[Card alloc] initWithCard:color andvalue:value];
+      [c setName:@"Card"];
+      [deck addObject:c];
     }
   }
 }
@@ -60,6 +63,14 @@
   }
 }
 
+- (void)addBackground {
+  SKSpriteNode *background = [[SKSpriteNode alloc] initWithImageNamed:@"wood_background"];
+  background.position = CGPointMake([self size].width/2, [self size].height/2);
+  background.zPosition = -1;
+  [background setName:@"background"];
+  [self addChild:background];
+}
+
 -(void)didMoveToView:(SKView *)view {
   deck =  [[NSMutableArray alloc] init];
   piles = [[NSMutableArray alloc] init];
@@ -80,6 +91,8 @@
       [self addChild:c];
     }
   }
+
+  [self addBackground];
 }
 
 -(void)makeStackOnTop:(NSMutableArray*)array
@@ -130,6 +143,9 @@
 
 -(void)mouseDragged:(NSEvent *)theEvent
 {
+  if (!draggedCards) {
+    return;
+  }
   CGPoint currentPosition = [theEvent locationInNode:self];
   currentPosition.x -= clickOffset.x;
   currentPosition.y -= clickOffset.y;
@@ -145,6 +161,11 @@
   clicked_card = (Card*)[self nodeAtPoint:clicked_position];
   clickOffset = [theEvent locationInNode:clicked_card];
 
+  if([[clicked_card name]  isNotEqualTo: @"Card"]) {
+    draggedCards = NULL;
+    return;
+  }
+
   NSEnumerator *enumerator = [piles objectEnumerator];
 
   Pile *p;
@@ -155,14 +176,16 @@
   }
 
   originPoint = [[draggedCards objectAtIndex:0] getCardPosition];
-
   [self makeStackOnTop:draggedCards];
-
   [clicked_card print];
 }
 
 -(void)mouseUp:(NSEvent *)theEvent
 {
+  if (!draggedCards) {
+    return;
+  }
+
   NSEnumerator *enumerator = [draggedCards objectEnumerator];
   Card *c;
 
@@ -182,6 +205,8 @@
     originPoint.y -= Y_OFFSET;
     sequence = [SKAction moveTo:originPoint duration:0.1];
   }
+
+  draggedCards = NULL;
 }
 
 -(void)positionDraggedCards:(CGPoint)point
