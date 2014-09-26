@@ -41,6 +41,10 @@
 }
 
 - (void)dealCards {
+  SKAction *action;
+  SKAction *delay_action;
+  SKAction *sequence_action;
+  float delay = 0;
   for(int i = 0; i < NUMBER_OF_PILES; i++) {
     NSEnumerator *enumerator = [piles objectEnumerator];
     Pile *p;
@@ -56,9 +60,19 @@
       /* TODO: Is this the best way to handle this? */
       d.zPosition = Y_POSITION_PILES-cgp.y;
 
-      [d setCardPosition:cgp];
+      [d setCardPosition:CGPointMake(-100,-100)];
       [deck removeObjectAtIndex:0];
       [p addCard:d];
+      action = [SKAction moveTo:cgp duration:0.5];
+      delay_action = [SKAction waitForDuration:delay];
+      SKAction *card_delt_action = [SKAction runBlock:
+                                     ^{
+                                       [d setCardPosition:d.position];
+
+                                     }];
+      sequence_action = [SKAction sequence:[NSArray arrayWithObjects:delay_action, action,card_delt_action, nil]];
+      delay += 0.05;
+      [d runAction:sequence_action];
     }
   }
 }

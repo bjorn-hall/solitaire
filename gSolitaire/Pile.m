@@ -27,7 +27,6 @@
   NSEnumerator *enumerator = [cards objectEnumerator];
 
   Card *card;
-  int i = 0;
   while(card = [enumerator nextObject]) {
     if(foundCard || (card.cardColor == c.cardColor && card.cardValue == c.cardValue)) {
       [array addObject:card];
