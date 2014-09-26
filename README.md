@@ -1,4 +1,4 @@
-solitaire
+Solitaire
 =========
 
-Spritekit solitaire game
+Spritekit solitaire game developed to learn Xcode, spritekit and github.
