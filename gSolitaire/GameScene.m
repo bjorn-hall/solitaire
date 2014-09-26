@@ -9,6 +9,11 @@
 #import "GameScene.h"
 #import "Pile.h"
 
+#define Y_OFFSET 30
+#define NUMBER_OF_PILES 7
+#define Y_POSITION_PILES 500
+#define NUMBER_OF_STACK_PILES 4
+
 @implementation GameScene
 {
   NSMutableArray *deck;
@@ -27,13 +32,13 @@
 }
 
 - (void)addPiles {
-  for(int i = 0; i < 7; i++) {
-    [piles addObject:[[Pile alloc] initWithPosition:CGPointMake(100+(i*120), 600)]];
+  for(int i = 0; i < NUMBER_OF_PILES; i++) {
+    [piles addObject:[[Pile alloc] initWithPosition:CGPointMake(100+(i*120), Y_POSITION_PILES)]];
   }
 }
 
 - (void)dealCards {
-  for(int i = 0; i < 7; i++) {
+  for(int i = 0; i < NUMBER_OF_PILES; i++) {
     NSEnumerator *enumerator = [piles objectEnumerator];
     Pile *p;
     for(int j = 0; j < i; j++) {[enumerator nextObject];}
@@ -43,10 +48,10 @@
 
       CGPoint cgp = [p getPosition];
 
-      cgp.y -= i*30;
+      cgp.y -= i*Y_OFFSET;
 
       /* TODO: Is this the best way to handle this? */
-      d.zPosition = 600-cgp.y;
+      d.zPosition = Y_POSITION_PILES-cgp.y;
 
       [d setCardPosition:cgp];
       [deck removeObjectAtIndex:0];
@@ -97,6 +102,31 @@
   }
 }
 
+-(void)calculateZPosition:(Pile*)p
+{
+  NSEnumerator *enumerator = [[p getCardArray] objectEnumerator];
+
+  Card *c;
+  int i = 0;
+
+  while(c = [enumerator nextObject]) {
+    c.zPosition = Y_POSITION_PILES+(Y_OFFSET*i++);
+  }
+}
+
+-(Pile *)getPileWithCard:(Card *)c {
+  Pile *p;
+
+  NSEnumerator *enumerator = [piles objectEnumerator];
+
+  while(p = [enumerator nextObject]) {
+    if([p isCardInPile:c]) {
+      return p;
+    }
+  }
+
+  return NULL;
+}
 
 -(void)mouseDragged:(NSEvent *)theEvent
 {
@@ -129,13 +159,29 @@
   [self makeStackOnTop:draggedCards];
 
   [clicked_card print];
-
 }
 
 -(void)mouseUp:(NSEvent *)theEvent
 {
-  [self positionDraggedCards:originPoint];
-  draggedCards = NULL;
+  NSEnumerator *enumerator = [draggedCards objectEnumerator];
+  Card *c;
+
+  SKAction *fixZOrderWhenDone = [SKAction runBlock:
+  ^{
+    Pile *p;
+    NSLog(@"Done!");
+
+    p = [self getPileWithCard:[draggedCards objectAtIndex:0]];
+    [self calculateZPosition:p];
+  }];
+
+  SKAction *sequence = [SKAction sequence:[NSArray arrayWithObjects:[SKAction moveTo:originPoint duration:0.1], fixZOrderWhenDone, nil]];
+
+  while(c = [enumerator nextObject]) {
+    [c runAction:sequence];
+    originPoint.y -= Y_OFFSET;
+    sequence = [SKAction moveTo:originPoint duration:0.1];
+  }
 }
 
 -(void)positionDraggedCards:(CGPoint)point
@@ -145,7 +191,7 @@
   Card *c;
   while(c = [enumerator nextObject]) {
     c.position = point;
-    point.y -= 30;
+    point.y -= Y_OFFSET;
   }
   [self makeStackOnTop:draggedCards];
 }
