@@ -17,6 +17,6 @@
 -(NSMutableArray*)getCardArray;
 -(CGPoint)getPosition;
 -(BOOL)isCardInPile:(Card*)c;
--(NSMutableArray*)getCardsBelow:(Card*)c;
+-(Pile*)getCardsBelow:(Card*)c;
 
 @end

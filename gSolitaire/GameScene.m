@@ -18,9 +18,10 @@
 {
   NSMutableArray *deck;
   NSMutableArray *piles;
-  NSMutableArray *draggedCards;
+  Pile *draggedCards;
   CGPoint clickOffset;
   CGPoint originPoint;
+  Pile *originPile;
 }
 
 - (void)addCardsToDeck {
@@ -35,8 +36,12 @@
 }
 
 - (void)addPiles {
+  Pile *p;
   for(int i = 0; i < NUMBER_OF_PILES; i++) {
-    [piles addObject:[[Pile alloc] initWithPosition:CGPointMake(100+(i*120), Y_POSITION_PILES)]];
+    p = [[Pile alloc] initWithPosition:CGPointMake(100+(i*120), Y_POSITION_PILES)];
+    //NSString *strFromInt = [NSString stringWithFormat:@"Pile: %d",i];
+   // [p setName:@"test"];
+    [piles addObject:p];
   }
 }
 
@@ -51,28 +56,24 @@
     for(int j = 0; j < i; j++) {[enumerator nextObject];}
     while (p = [enumerator nextObject]) {
       Card *c = [deck objectAtIndex:0];
-      Card *d = [c copy];
+      //Card *d = [c copy];
 
       CGPoint cgp = [p getPosition];
 
       cgp.y -= i*Y_OFFSET;
 
       /* TODO: Is this the best way to handle this? */
-      d.zPosition = Y_POSITION_PILES-cgp.y;
+      c.zPosition = Y_POSITION_PILES-cgp.y;
 
-      [d setCardPosition:CGPointMake(-100,-100)];
+      c.position = CGPointMake(-100,-100); // Put card here
+      [c setCardPosition:cgp]; // And animate to here
       [deck removeObjectAtIndex:0];
-      [p addCard:d];
+      [p addCard:c];
       action = [SKAction moveTo:cgp duration:0.5];
       delay_action = [SKAction waitForDuration:delay];
-      SKAction *card_delt_action = [SKAction runBlock:
-                                     ^{
-                                       [d setCardPosition:d.position];
-
-                                     }];
-      sequence_action = [SKAction sequence:[NSArray arrayWithObjects:delay_action, action,card_delt_action, nil]];
+      sequence_action = [SKAction sequence:[NSArray arrayWithObjects:delay_action, action, nil]];
       delay += 0.05;
-      [d runAction:sequence_action];
+      [c runAction:sequence_action];
     }
   }
 }
@@ -109,9 +110,9 @@
   [self addBackground];
 }
 
--(void)makeStackOnTop:(NSMutableArray*)array
+-(void)makePileOnTop:(Pile*)pile
 {
-  NSEnumerator *enumerator = [array objectEnumerator];
+  NSEnumerator *enumerator = [[pile getCardArray] objectEnumerator];
 
   Card *c;
   while(c = [enumerator nextObject]) {
@@ -186,11 +187,13 @@
   while(p = [enumerator nextObject]) {
     if([p isCardInPile:clicked_card]) {
       draggedCards = [p getCardsBelow:clicked_card];
+      originPile = p;
+      break;
     }
   }
 
-  originPoint = [[draggedCards objectAtIndex:0] getCardPosition];
-  [self makeStackOnTop:draggedCards];
+  originPoint = [[[draggedCards getCardArray] objectAtIndex:0] getCardPosition];
+  [self makePileOnTop:draggedCards];
   [clicked_card print];
 }
 
@@ -208,31 +211,32 @@
   return NULL;
 }
 
--(BOOL)isMoveAllowedFrom:(NSMutableArray *)array toPile:(Pile*)p
+-(BOOL)isMoveAllowedFrom:(Pile *)pile toPile:(Pile*)p
 {
   return TRUE;
 }
 
--(void)moveCardsFrom:(NSMutableArray *)array toPile:(Pile*)pile
+-(void)moveCardsFrom:(Pile *)fromPile toPile:(Pile*)toPile
 {
   BOOL firstObject = TRUE;
-  NSEnumerator *enumerator = [array objectEnumerator];
+  NSEnumerator *enumerator = [[fromPile getCardArray] objectEnumerator];
 
   Card *c;
-  Pile *fromPile = [self getPileWithCard:[array objectAtIndex:0]];
   SKAction *action;
-  SKAction *postAnimationCode = [SKAction runBlock:^(void){[self calculateZPosition:pile];}];
+  SKAction *postAnimationCode = [SKAction runBlock:^(void){[self calculateZPosition:toPile];}];
 
   while(c = [enumerator nextObject]) {
-    [pile addCard:c];
+    [toPile addCard:c];
     if(firstObject) {
       action = [SKAction sequence:[NSArray arrayWithObjects:[SKAction moveTo:[c getCardPosition] duration:0.1], postAnimationCode, nil]];
     } else {
       action = [SKAction moveTo:[c getCardPosition] duration:0.1];
     }
     [c runAction:action];
-    [fromPile removeCard:c];
   }
+
+  [[fromPile getCardArray] removeAllObjects];
+
 }
 
 -(void)mouseUp:(NSEvent *)theEvent
@@ -242,28 +246,32 @@
   }
 
   // Check if we released card on another pile
-  Card *card = [draggedCards lastObject];
+  Card *card = [[draggedCards getCardArray] lastObject];
   CGPoint point = card.position;
   Pile *p = [self pileFromLocation:point];
 
-  if(p) {
-    if([self isMoveAllowedFrom:draggedCards toPile:p]) {
-      // Move cards
-      [self moveCardsFrom:draggedCards toPile:p];
-      draggedCards = NULL;
-      return;
-    }
+  if(!p) {
+    p = originPile;
+  }
+
+  if([self isMoveAllowedFrom:draggedCards toPile:p]) {
+    // Move cards
+    [self moveCardsFrom:draggedCards toPile:p];
+
+    draggedCards = NULL;
+    return;
   }
 }
 
 -(void)positionDraggedCards:(CGPoint)point
 {
-  NSEnumerator *enumerator = [draggedCards objectEnumerator];
+  NSEnumerator *enumerator = [[draggedCards getCardArray] objectEnumerator];
 
   Card *c;
   while(c = [enumerator nextObject]) {
     c.position = point;
     point.y -= Y_OFFSET;
+    NSLog(@"%f %f", c.position.x, c.position.y);
   }
 }
 

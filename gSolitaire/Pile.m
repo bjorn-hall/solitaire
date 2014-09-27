@@ -19,25 +19,29 @@
   return pilePosition;
 }
 
--(NSMutableArray*)getCardsBelow:(Card*)c
+-(Pile*)getCardsBelow:(Card*)c
 {
   bool foundCard = false;
-  NSMutableArray *array = [[NSMutableArray alloc] init];
+  Pile *pile = [[Pile alloc] init];
 
   NSEnumerator *enumerator = [cards objectEnumerator];
 
   Card *card;
   while(card = [enumerator nextObject]) {
     if(foundCard || (card.cardColor == c.cardColor && card.cardValue == c.cardValue)) {
-      [array addObject:card];
-      //[array addObject:[card copy]];
-      //[self removeCard:card];
+      [pile addCard:card];
       foundCard = true;
     }
   }
 
+  enumerator = [[pile getCardArray] objectEnumerator];
+
+  while(card = [enumerator nextObject]) {
+    [self removeCard:card];
+  }
+
   if(foundCard) {
-    return array;
+    return pile;
   }
   return NULL;
 }
