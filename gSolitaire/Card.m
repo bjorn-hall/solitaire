@@ -17,7 +17,7 @@
 {
   pos.x = p.x;
   pos.y = p.y;
-  self.position = p;
+//  self.position = p;
 }
 
 -(id)copyWithZone:(NSZone *)zone
@@ -26,6 +26,8 @@
   //c = [[Card alloc] initWithCard:self.color andvalue:self.value];
   c.cardColor = self.cardColor;
   c.cardValue = self.cardValue;
+  c.position = self.position;
+  [c setCardPosition:[self getCardPosition]];
 
   return c;
 }

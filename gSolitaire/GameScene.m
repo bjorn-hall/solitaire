@@ -194,33 +194,66 @@
   [clicked_card print];
 }
 
+-(Pile*)pileFromLocation:(CGPoint) point
+{
+  Pile *p;
+  NSEnumerator *enumerator = [piles objectEnumerator];
+
+  while(p = [enumerator nextObject]) {
+    if([p getPosition].x - 50 <= point.x && [p getPosition].x + 50 >= point.x) {
+      return p;
+    }
+  }
+
+  return NULL;
+}
+
+-(BOOL)isMoveAllowedFrom:(NSMutableArray *)array toPile:(Pile*)p
+{
+  return TRUE;
+}
+
+-(void)moveCardsFrom:(NSMutableArray *)array toPile:(Pile*)pile
+{
+  BOOL firstObject = TRUE;
+  NSEnumerator *enumerator = [array objectEnumerator];
+
+  Card *c;
+  Pile *fromPile = [self getPileWithCard:[array objectAtIndex:0]];
+  SKAction *action;
+  SKAction *postAnimationCode = [SKAction runBlock:^(void){[self calculateZPosition:pile];}];
+
+  while(c = [enumerator nextObject]) {
+    [pile addCard:c];
+    if(firstObject) {
+      action = [SKAction sequence:[NSArray arrayWithObjects:[SKAction moveTo:[c getCardPosition] duration:0.1], postAnimationCode, nil]];
+    } else {
+      action = [SKAction moveTo:[c getCardPosition] duration:0.1];
+    }
+    [c runAction:action];
+    [fromPile removeCard:c];
+  }
+}
+
 -(void)mouseUp:(NSEvent *)theEvent
 {
   if (!draggedCards) {
     return;
   }
 
-  NSEnumerator *enumerator = [draggedCards objectEnumerator];
-  Card *c;
+  // Check if we released card on another pile
+  Card *card = [draggedCards lastObject];
+  CGPoint point = card.position;
+  Pile *p = [self pileFromLocation:point];
 
-  SKAction *fixZOrderWhenDone = [SKAction runBlock:
-  ^{
-    Pile *p;
-    NSLog(@"Done!");
-
-    p = [self getPileWithCard:[draggedCards objectAtIndex:0]];
-    [self calculateZPosition:p];
-  }];
-
-  SKAction *sequence = [SKAction sequence:[NSArray arrayWithObjects:[SKAction moveTo:originPoint duration:0.1], fixZOrderWhenDone, nil]];
-
-  while(c = [enumerator nextObject]) {
-    [c runAction:sequence];
-    originPoint.y -= Y_OFFSET;
-    sequence = [SKAction moveTo:originPoint duration:0.1];
+  if(p) {
+    if([self isMoveAllowedFrom:draggedCards toPile:p]) {
+      // Move cards
+      [self moveCardsFrom:draggedCards toPile:p];
+      draggedCards = NULL;
+      return;
+    }
   }
-
-  draggedCards = NULL;
 }
 
 -(void)positionDraggedCards:(CGPoint)point
@@ -232,7 +265,6 @@
     c.position = point;
     point.y -= Y_OFFSET;
   }
-  [self makeStackOnTop:draggedCards];
 }
 
 -(void)update:(CFTimeInterval)currentTime {

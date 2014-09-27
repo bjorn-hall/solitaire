@@ -30,6 +30,8 @@
   while(card = [enumerator nextObject]) {
     if(foundCard || (card.cardColor == c.cardColor && card.cardValue == c.cardValue)) {
       [array addObject:card];
+      //[array addObject:[card copy]];
+      //[self removeCard:card];
       foundCard = true;
     }
   }
@@ -73,6 +75,21 @@
 -(void)addCard:(Card*)c
 {
   [cards addObject:c];
+  // Update pile positions
+  NSEnumerator *enumerator = [cards objectEnumerator];
+
+  Card *card;
+  CGPoint cgp = [self getPosition];
+  while(card = [enumerator nextObject]) {
+    [card setCardPosition:cgp];
+    cgp.y -= 30;
+  }
+}
+
+-(void)removeCard:(Card *)c
+{
+  [cards removeObject:c];
+
 }
 
 -(NSMutableArray*)getCardArray

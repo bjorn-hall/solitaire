@@ -12,6 +12,7 @@
 @interface Pile : NSObject
 
 -(void)addCard:(Card*)c;
+-(void)removeCard:(Card*)c;
 -(id)initWithPosition:(CGPoint) p;
 -(NSMutableArray*)getCardArray;
 -(CGPoint)getPosition;
