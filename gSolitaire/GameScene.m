@@ -213,6 +213,25 @@
 
 -(BOOL)isMoveAllowedFrom:(Pile *)pile toPile:(Pile*)p
 {
+  Card *cardFrom;
+  Card *cardTo;
+
+  cardFrom = [[pile getCardArray] objectAtIndex:0];
+  cardTo = [[p getCardArray] lastObject];
+
+  if(cardTo == NULL && cardFrom.cardValue == King) {
+    return TRUE;
+  }
+
+  if(cardFrom.cardColor == Spade || cardFrom.cardColor == Club) {
+    if(cardTo.cardColor == Spade || cardTo.cardColor == Club) {
+      return FALSE;
+    }
+  }
+
+  if(cardFrom.cardValue != cardTo.cardValue-1) {
+    return FALSE;
+  }
   return TRUE;
 }
 
@@ -250,17 +269,14 @@
   CGPoint point = card.position;
   Pile *p = [self pileFromLocation:point];
 
-  if(!p) {
+  if(!p || [self isMoveAllowedFrom:draggedCards toPile:p] == FALSE) {
     p = originPile;
   }
 
-  if([self isMoveAllowedFrom:draggedCards toPile:p]) {
-    // Move cards
-    [self moveCardsFrom:draggedCards toPile:p];
+  [self moveCardsFrom:draggedCards toPile:p];
 
-    draggedCards = NULL;
-    return;
-  }
+  draggedCards = NULL;
+  return;
 }
 
 -(void)positionDraggedCards:(CGPoint)point
@@ -271,7 +287,6 @@
   while(c = [enumerator nextObject]) {
     c.position = point;
     point.y -= Y_OFFSET;
-    NSLog(@"%f %f", c.position.x, c.position.y);
   }
 }
 
