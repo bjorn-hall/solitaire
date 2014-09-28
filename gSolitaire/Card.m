@@ -12,6 +12,9 @@
 
 @synthesize cardColor;
 @synthesize cardValue;
+@synthesize turned;
+@synthesize cardFrontTexture;
+@synthesize cardBackTexture;
 
 -(void)setCardPosition:(CGPoint) p
 {
@@ -37,16 +40,30 @@
   return pos;
 }
 
+-(void)cardTurned:(BOOL) t
+{
+  self.turned = t;
+  if(t) {
+    [super setTexture:cardBackTexture];
+  } else {
+    [super setTexture:cardFrontTexture];
+  }
+}
+
 -(id)initWithCard:(enum Color)c andvalue:(enum Value)v
 {
   NSString *ns = [self getCardString:c andvalue:v];
-  self = [super initWithImageNamed:ns];
+  self.cardFrontTexture = [SKTexture textureWithImageNamed:ns];
+  self.cardBackTexture = [SKTexture textureWithImageNamed:@"back"];
+
+  self = [super initWithTexture:cardFrontTexture];
 
   if(self) {
     self.name = ns;
     self.scale = 1;
     cardColor = c;
     cardValue = v;
+    self.turned = FALSE;
   }
 
   return self;

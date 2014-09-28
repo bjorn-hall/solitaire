@@ -17,15 +17,22 @@ enum Value {Ace=0, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Q
   enum Color cardColor;
   enum Value cardValue;
   CGPoint pos;
+  BOOL turned;
+  SKTexture *cardFrontTexture;
+  SKTexture *cardBackTexture;
 }
 
 @property (readwrite) enum Color cardColor;
 @property (readwrite) enum Value cardValue;
+@property (readwrite) BOOL turned;
+@property (readwrite) SKTexture *cardFrontTexture;
+@property (readwrite) SKTexture *cardBackTexture;
 
 -(id)initWithCard:(enum Color)c andvalue:(enum Value)v;
 -(NSString*)getCardString:(enum Color)c andvalue:(enum Value)v;
 -(void)print;
 -(void)setCardPosition:(CGPoint) p;
 -(CGPoint)getCardPosition;
+-(void)cardTurned:(BOOL) turned;
 
 @end

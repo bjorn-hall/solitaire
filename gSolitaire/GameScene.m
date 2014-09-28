@@ -49,14 +49,15 @@
   SKAction *action;
   SKAction *delay_action;
   SKAction *sequence_action;
+  BOOL firstCard = TRUE;
   float delay = 0;
   for(int i = 0; i < NUMBER_OF_PILES; i++) {
+    firstCard = TRUE;
     NSEnumerator *enumerator = [piles objectEnumerator];
     Pile *p;
     for(int j = 0; j < i; j++) {[enumerator nextObject];}
     while (p = [enumerator nextObject]) {
       Card *c = [deck objectAtIndex:0];
-      //Card *d = [c copy];
 
       CGPoint cgp = [p getPosition];
 
@@ -68,6 +69,12 @@
       c.position = CGPointMake(-100,-100); // Put card here
       [c setCardPosition:cgp]; // And animate to here
       [deck removeObjectAtIndex:0];
+      if(firstCard) {
+        [c cardTurned:FALSE];
+        firstCard = FALSE;
+      } else {
+        [c cardTurned:TRUE];
+      }
       [p addCard:c];
       action = [SKAction moveTo:cgp duration:0.5];
       delay_action = [SKAction waitForDuration:delay];
@@ -176,7 +183,7 @@
   clicked_card = (Card*)[self nodeAtPoint:clicked_position];
   clickOffset = [theEvent locationInNode:clicked_card];
 
-  if([[clicked_card name]  isNotEqualTo: @"Card"]) {
+  if([[clicked_card name] isNotEqualTo: @"Card"] || clicked_card.turned) {
     draggedCards = NULL;
     return;
   }
@@ -274,6 +281,11 @@
   }
 
   [self moveCardsFrom:draggedCards toPile:p];
+
+  card = [[originPile getCardArray] lastObject];
+  if(card) {
+    [card cardTurned:FALSE];
+  }
 
   draggedCards = NULL;
   return;
