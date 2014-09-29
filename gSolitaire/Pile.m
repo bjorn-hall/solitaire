@@ -12,11 +12,24 @@
 {
   NSMutableArray *cards;
   CGPoint pilePosition;
+  enum pileType pile_type;
 }
 
 -(CGPoint)getPosition
 {
   return pilePosition;
+}
+
+-(void)setPileType:(enum pileType)pt {
+  pile_type = pt;
+}
+
+-(enum pileType)getPileType {
+  return pile_type;
+}
+
+-(void)setPilePosition:(CGPoint)p {
+  pilePosition = p;
 }
 
 -(Pile*)getCardsBelow:(Card*)c
@@ -76,18 +89,63 @@
   return self;
 }
 
+-(void)updatePilePositions
+{
+  CGPoint cgp = [self getPosition];
+  NSEnumerator *enumerator = [cards objectEnumerator];
+  Card *card;
+  int i = 10;
+
+  switch([self getPileType])
+  {
+    case TABLEAU_PILE:
+    {
+      while(card = [enumerator nextObject]) {
+        [card setCardPosition:cgp];
+        [card setZPosition:i++];
+        cgp.y -= 30;
+      }
+    }
+      break;
+    case WASTE_PILE:
+    {
+      // All card should be same pos as pile except last 3 which should be x+10 each
+
+
+      while(card = [enumerator nextObject]) {
+        [card setCardPosition:cgp];
+        [card setPosition:cgp];
+        [card setZPosition:i++];
+      }
+      int j = 0;
+      if([cards count] > 3) {
+        for(i = [cards count]-3; i < [cards count]; i++) {
+          card = [cards objectAtIndex:i];
+          CGPoint cgp = [self getPosition];
+
+          [card setPosition:CGPointMake(cgp.x+(10*j), cgp.y)];
+          [card setCardPosition:CGPointMake(cgp.x+(10*j++), cgp.y)];
+        }
+      } else {
+        for(i = 0; i < [cards count]; i++) {
+          card = [cards objectAtIndex:i];
+          CGPoint cgp = [self getPosition];
+
+          [card setPosition:CGPointMake(cgp.x+(10*i), cgp.y)];
+          [card setCardPosition:CGPointMake(cgp.x+(10*i), cgp.y)];
+        }
+      }
+    }
+      break;
+    default:
+      NSLog(@"Warning: Unknown piles type");
+      break;
+  }
+}
+
 -(void)addCard:(Card*)c
 {
   [cards addObject:c];
-  // Update pile positions
-  NSEnumerator *enumerator = [cards objectEnumerator];
-
-  Card *card;
-  CGPoint cgp = [self getPosition];
-  while(card = [enumerator nextObject]) {
-    [card setCardPosition:cgp];
-    cgp.y -= 30;
-  }
 }
 
 -(void)removeCard:(Card *)c

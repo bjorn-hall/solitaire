@@ -10,8 +10,13 @@
 #import "Pile.h"
 
 #define Y_OFFSET 30
-#define NUMBER_OF_PILES 7
+#define NUMBER_OF_PILES 8
+#define NUMBER_OF_TABLEAU_PILES 7
+#define NUMBER_OF_DECK_PILES 1
+#define NUMBER_OF_WASTE_PILES 1
+#define NUMBER_OF_HOME_PILES 4
 #define Y_POSITION_PILES 500
+#define Y_POSITION_WASTE_PILES 675
 #define NUMBER_OF_STACK_PILES 4
 
 @implementation GameScene
@@ -22,6 +27,7 @@
   CGPoint clickOffset;
   CGPoint originPoint;
   Pile *originPile;
+  SKSpriteNode *DeckSprite;
 }
 
 - (void)addCardsToDeck {
@@ -37,26 +43,46 @@
 
 - (void)addPiles {
   Pile *p;
-  for(int i = 0; i < NUMBER_OF_PILES; i++) {
+
+  for(int i = 0; i < NUMBER_OF_TABLEAU_PILES; i++) {
     p = [[Pile alloc] initWithPosition:CGPointMake(100+(i*120), Y_POSITION_PILES)];
-    //NSString *strFromInt = [NSString stringWithFormat:@"Pile: %d",i];
-   // [p setName:@"test"];
+    [p setPileType:TABLEAU_PILE];
+    [piles addObject:p];
+  }
+
+  for(int i = 0; i < NUMBER_OF_WASTE_PILES; i++) {
+    p = [[Pile alloc] initWithPosition:CGPointMake(220+(i*120), Y_POSITION_WASTE_PILES)];
+    [p setPileType:WASTE_PILE];
     [piles addObject:p];
   }
 }
 
+// TODO: This function is too big and ugly, hard to follow..
 - (void)dealCards {
   SKAction *action;
   SKAction *delay_action;
   SKAction *sequence_action;
   BOOL firstCard = TRUE;
   float delay = 0;
+
   for(int i = 0; i < NUMBER_OF_PILES; i++) {
     firstCard = TRUE;
     NSEnumerator *enumerator = [piles objectEnumerator];
     Pile *p;
-    for(int j = 0; j < i; j++) {[enumerator nextObject];}
+
+    for(int j = 0; j < i; j++) {
+      p = [enumerator nextObject];
+      while([p getPileType] != TABLEAU_PILE) {
+        p = [enumerator nextObject];
+      }
+    }
+
     while (p = [enumerator nextObject]) {
+      /* Only deal to tableau piles */
+      if([p getPileType] != TABLEAU_PILE) {
+        continue;
+      }
+
       Card *c = [deck objectAtIndex:0];
 
       CGPoint cgp = [p getPosition];
@@ -113,6 +139,14 @@
       [self addChild:c];
     }
   }
+
+  DeckSprite = [[SKSpriteNode alloc] initWithImageNamed:@"back"];
+  [DeckSprite setZPosition:0];
+  [DeckSprite setPosition:CGPointMake(100, 675)];
+  [DeckSprite setScale:1.0];
+  [DeckSprite setName:@"Deck"];
+  [self addChild:DeckSprite];
+
 
   [self addBackground];
 }
@@ -174,6 +208,54 @@
   [self positionDraggedCards:currentPosition];
 }
 
+-(Pile*)getWastePile:(NSMutableArray*)array {
+  Pile *p;
+  NSEnumerator *enumerator = [piles objectEnumerator];
+  while(p = [enumerator nextObject]) {
+    if([p getPileType] == WASTE_PILE) {
+      return p;
+    }
+  }
+  return NULL;
+}
+
+-(void)dealCardsFromDeck
+{
+  Card *c;
+  NSEnumerator *enumerator;
+  Pile *p = [self getWastePile:piles];
+
+  if([deck objectAtIndex:0] == NULL) {
+    // Move all cards from waste pile to deck
+    enumerator = [[p getCardArray] objectEnumerator];
+
+    while(c = [enumerator nextObject]) {
+      [deck addObject:c];
+      [[p getCardArray] removeObject:c];
+      [c removeFromParent];
+    }
+  }
+
+  /*enumerator = [[p getCardArray] objectEnumerator];
+
+  while(c = [enumerator nextObject]) {
+    [c setCardPosition:[p getPosition]];
+    [c setPosition:[p getPosition]];
+  }*/
+
+  for(int i = 0; i < 3; i++) {
+    c = [deck objectAtIndex:0];
+    if(c == NULL) {
+      break;
+    }
+    [c setName:@"Card"];
+    [p addCard:c];
+    [deck removeObjectAtIndex:0];
+    [self addChild:c];
+  }
+  [p updatePilePositions];
+}
+
 -(void)mouseDown:(NSEvent *)theEvent {
   Card *clicked_card;
   CGPoint clicked_position;
@@ -183,6 +265,13 @@
   clicked_card = (Card*)[self nodeAtPoint:clicked_position];
   clickOffset = [theEvent locationInNode:clicked_card];
 
+  if([clicked_card.name isEqualTo: @"Deck"]) {
+    // deal 3 new cards to waste pile
+    NSLog(@"Dealing 3 new cards to waste pile");
+    [self dealCardsFromDeck];
+    return;
+  }
+
   if([[clicked_card name] isNotEqualTo: @"Card"] || clicked_card.turned) {
     draggedCards = NULL;
     return;
@@ -190,14 +279,22 @@
 
   NSEnumerator *enumerator = [piles objectEnumerator];
 
-  Pile *p;
-  while(p = [enumerator nextObject]) {
-    if([p isCardInPile:clicked_card]) {
-      draggedCards = [p getCardsBelow:clicked_card];
-      originPile = p;
-      break;
+  Pile *p = [self getWastePile:piles];
+
+  if([p isCardInPile:clicked_card]) {
+    draggedCards = [p getCardsBelow:clicked_card];
+    [draggedCards setPileType:[p getPileType]];
+    originPile = p;
+  } else {
+    while(p = [enumerator nextObject]) {
+      if([p isCardInPile:clicked_card]) {
+        draggedCards = [p getCardsBelow:clicked_card];
+        originPile = p;
+        break;
+      }
     }
   }
+
 
   originPoint = [[[draggedCards getCardArray] objectAtIndex:0] getCardPosition];
   [self makePileOnTop:draggedCards];
