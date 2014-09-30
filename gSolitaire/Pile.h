@@ -22,8 +22,8 @@ enum pileType {
 -(void)removeCard:(Card*)c;
 -(id)initWithPosition:(CGPoint) p;
 -(void)setPilePosition:(CGPoint)p;
--(NSMutableArray*)getCardArray;
 -(CGPoint)getPosition;
+-(NSMutableArray*)getCardArray;
 -(BOOL)isCardInPile:(Card*)c;
 -(Pile*)getCardsBelow:(Card*)c;
 -(void)setPileType:(enum pileType)pt;

@@ -225,29 +225,22 @@
   NSEnumerator *enumerator;
   Pile *p = [self getWastePile:piles];
 
-  if([deck objectAtIndex:0] == NULL) {
+  if([deck count] == 0) {
     // Move all cards from waste pile to deck
     enumerator = [[p getCardArray] objectEnumerator];
 
     while(c = [enumerator nextObject]) {
       [deck addObject:c];
-      [[p getCardArray] removeObject:c];
       [c removeFromParent];
     }
+    [[p getCardArray] removeAllObjects];
   }
 
-  /*enumerator = [[p getCardArray] objectEnumerator];
-
-  while(c = [enumerator nextObject]) {
-    [c setCardPosition:[p getPosition]];
-    [c setPosition:[p getPosition]];
-  }*/
-
   for(int i = 0; i < 3; i++) {
-    c = [deck objectAtIndex:0];
-    if(c == NULL) {
+    if([deck count] == 0) {
       break;
     }
+    c = [deck objectAtIndex:0];
     [c setName:@"Card"];
     [p addCard:c];
     [deck removeObjectAtIndex:0];
@@ -350,6 +343,7 @@
 
   while(c = [enumerator nextObject]) {
     [toPile addCard:c];
+    [toPile updatePilePositions];
     if(firstObject) {
       action = [SKAction sequence:[NSArray arrayWithObjects:[SKAction moveTo:[c getCardPosition] duration:0.1], postAnimationCode, nil]];
     } else {
