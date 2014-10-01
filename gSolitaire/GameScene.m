@@ -61,7 +61,8 @@
   DeckSprite = [[SKSpriteNode alloc] initWithImageNamed:@"back"];
   [DeckSprite setZPosition:0];
   [DeckSprite setPosition:CGPointMake(100, 675)];
-  [DeckSprite setScale:1.0];
+  // Why does scale 3 make the sprite 1:1 size???
+  [DeckSprite setScale:3];
   [DeckSprite setName:@"Deck"];
   [self addChild:DeckSprite];
 
