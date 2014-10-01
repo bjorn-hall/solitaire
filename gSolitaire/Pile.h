@@ -29,5 +29,6 @@ enum pileType {
 -(void)setPileType:(enum pileType)pt;
 -(enum pileType)getPileType;
 -(void)updatePilePositions;
+-(SKSpriteNode*)getPileBackground;
 
 @end

@@ -76,7 +76,8 @@
   NSEnumerator *enumerator = [array objectEnumerator];
 
   while(p = [enumerator nextObject]) {
-    if([p getPosition].x - 50 <= point.x && [p getPosition].x + 50 >= point.x) {
+    if([p getPosition].x - 50 <= point.x && [p getPosition].x + 50 >= point.x
+       && [p getPosition].y >= (point.y-100)) {
       return p;
     }
   }
@@ -137,19 +138,35 @@
   cardFrom = [[fromPile getCardArray] firstObject];
   cardTo = [[toPile getCardArray] lastObject];
 
-  if(cardTo == NULL && cardFrom.cardValue == King) {
-    return TRUE;
+  if(cardFrom == NULL) {
+    return FALSE;
   }
 
-  if(cardFrom.cardColor == Spade || cardFrom.cardColor == Club) {
-    if(cardTo.cardColor == Spade || cardTo.cardColor == Club) {
+  if([toPile getPileType] == HOME_PILE) {
+    if([[toPile getCardArray] count] == 0 && cardFrom.cardValue == Ace) {
+      return TRUE;
+    }
+    if(cardTo.cardColor != cardFrom.cardColor || (cardTo.cardValue+1) != cardFrom.cardValue ) {
+      return FALSE;
+    }
+
+  } else {
+    if(cardTo == NULL && cardFrom.cardValue == King) {
+      return TRUE;
+    }
+
+    if(cardFrom.cardColor == Spade || cardFrom.cardColor == Club) {
+      if(cardTo.cardColor == Spade || cardTo.cardColor == Club) {
+        return FALSE;
+      }
+    }
+
+    if(cardFrom.cardValue != cardTo.cardValue-1) {
       return FALSE;
     }
   }
 
-  if(cardFrom.cardValue != cardTo.cardValue-1) {
-    return FALSE;
-  }
+
   return TRUE;
 }
 

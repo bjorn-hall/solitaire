@@ -13,11 +13,17 @@
   NSMutableArray *cards;
   CGPoint pilePosition;
   enum pileType pile_type;
+  SKSpriteNode *pileBackground;
 }
 
 -(CGPoint)getPosition
 {
   return pilePosition;
+}
+
+-(SKSpriteNode*)getPileBackground
+{
+  return pileBackground;
 }
 
 -(void)setPileType:(enum pileType)pt {
@@ -77,6 +83,9 @@
 {
   self = [super init];
   cards = [[NSMutableArray alloc] init];
+
+  pileBackground = [SKSpriteNode spriteNodeWithColor:[NSColor blackColor] size:CGSizeMake(100, 145)];
+  [pileBackground setName:@"PileBackground"];
   return self;
 }
 
@@ -85,6 +94,10 @@
   self = [self init];
 
   pilePosition = p;
+
+  pileBackground.position = pilePosition;
+  pileBackground.zPosition = -5;
+  pileBackground.alpha = 0.1;
 
   return self;
 }
@@ -110,8 +123,6 @@
     case WASTE_PILE:
     {
       // All card should be same pos as pile except last 3 which should be x+10 each
-
-
       while(card = [enumerator nextObject]) {
         [card setCardPosition:cgp];
         [card setPosition:cgp];
@@ -137,8 +148,18 @@
       }
     }
       break;
+    case HOME_PILE:
+    {
+      while(card = [enumerator nextObject]) {
+        [card setCardPosition:cgp];
+        [card setPosition:cgp];
+        [card setZPosition:i++];
+      }
+    }
+      break;
     default:
-      NSLog(@"Warning: Unknown piles type");
+      NSLog(@"updatePilePositions: Warning - Unknown piles type");
+      NSAssert(FALSE, @"updatePilePositions: Warning - Unknown piles type");
       break;
   }
 }

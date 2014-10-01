@@ -9,6 +9,14 @@
 #import "GameScene.h"
 #import "Pile.h"
 
+/* 
+ Z-position info:
+ Background: -10
+ Pile background: -5
+ Cards: 10+1 per card
+ Dragged cards: 1000+original
+ */
+
 #define Y_OFFSET 30
 #define NUMBER_OF_PILES 8
 #define NUMBER_OF_TABLEAU_PILES 7
@@ -80,18 +88,28 @@
     p = [[Pile alloc] initWithPosition:CGPointMake(100+(i*120), Y_POSITION_PILES)];
     [p setPileType:TABLEAU_PILE];
     [piles addObject:p];
+    [self addChild:[p getPileBackground]];
+  }
+
+  for(int i = 0; i < NUMBER_OF_HOME_PILES; i++) {
+    p = [[Pile alloc] initWithPosition:CGPointMake(460+(i*120), Y_POSITION_WASTE_PILES)];
+    [p setPileType:HOME_PILE];
+    [piles addObject:p];
+    [self addChild:[p getPileBackground]];
   }
 
   for(int i = 0; i < NUMBER_OF_WASTE_PILES; i++) {
     p = [[Pile alloc] initWithPosition:CGPointMake(220+(i*120), Y_POSITION_WASTE_PILES)];
     [p setPileType:WASTE_PILE];
     [piles addObject:p];
+    [self addChild:[p getPileBackground]];
   }
 
   for(int i = 0; i < NUMBER_OF_DECK_PILES; i++) {
     p = [[Pile alloc] initWithPosition:CGPointMake(220+(i*120), Y_POSITION_DECK_PILES)];
     [p setPileType:DECK_PILE];
     [piles addObject:p];
+    [self addChild:[p getPileBackground]];
   }
 }
 
@@ -154,7 +172,7 @@
 - (void)addBackground {
   SKSpriteNode *background = [[SKSpriteNode alloc] initWithImageNamed:@"wood_background"];
   background.position = CGPointMake([self size].width/2, [self size].height/2);
-  background.zPosition = -1;
+  background.zPosition = -10;
   [background setName:@"background"];
   [self addChild:background];
 }
@@ -246,9 +264,11 @@
 
   [PileHelpers moveCardsFrom:draggedCards toPile:p];
 
-  card = [[originPile getCardArray] lastObject];
-  if(card) {
-    [card cardTurned:FALSE];
+  if([originPile getPileType] == TABLEAU_PILE) {
+    card = [[originPile getCardArray] lastObject];
+    if(card) {
+      [card cardTurned:FALSE];
+    }
   }
 
   draggedCards = NULL;
