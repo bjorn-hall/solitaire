@@ -119,7 +119,7 @@
       }
       int j = 0;
       if([cards count] > 3) {
-        for(i = [cards count]-3; i < [cards count]; i++) {
+        for(i = (int)[cards count]-3; i < [cards count]; i++) {
           card = [cards objectAtIndex:i];
           CGPoint cgp = [self getPosition];
 

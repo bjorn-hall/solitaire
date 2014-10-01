@@ -22,6 +22,7 @@
 		1DABA63B19D3583C003EE96A /* spades.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA63A19D3583C003EE96A /* spades.atlas */; };
 		1DABA63D19D607F8003EE96A /* wood_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA63C19D607F8003EE96A /* wood_background.png */; };
 		1DABA63F19D8AB0E003EE96A /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DABA63E19D8AB0E003EE96A /* back.png */; };
+		1DABA64419DC6B4F003EE96A /* PileHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DABA64319DC6B4F003EE96A /* PileHelpers.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,8 @@
 		1DABA63A19D3583C003EE96A /* spades.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = spades.atlas; sourceTree = "<group>"; };
 		1DABA63C19D607F8003EE96A /* wood_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood_background.png; sourceTree = "<group>"; };
 		1DABA63E19D8AB0E003EE96A /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		1DABA64219DC6B4F003EE96A /* PileHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PileHelpers.h; sourceTree = "<group>"; };
+		1DABA64319DC6B4F003EE96A /* PileHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PileHelpers.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +120,8 @@
 				1DABA52519CE378D003EE96A /* Card.m */,
 				1DABA52D19CF0AC1003EE96A /* Pile.h */,
 				1DABA52E19CF0AC1003EE96A /* Pile.m */,
+				1DABA64219DC6B4F003EE96A /* PileHelpers.h */,
+				1DABA64319DC6B4F003EE96A /* PileHelpers.m */,
 			);
 			path = gSolitaire;
 			sourceTree = "<group>";
@@ -256,6 +261,7 @@
 				1DABA52F19CF0AC1003EE96A /* Pile.m in Sources */,
 				1DABA4FB19CE3396003EE96A /* AppDelegate.m in Sources */,
 				1DABA4FE19CE3396003EE96A /* GameScene.m in Sources */,
+				1DABA64419DC6B4F003EE96A /* PileHelpers.m in Sources */,
 				1DABA4F819CE3396003EE96A /* main.m in Sources */,
 				1DABA52619CE378D003EE96A /* Card.m in Sources */,
 			);

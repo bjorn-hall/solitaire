@@ -71,7 +71,8 @@
 
 -(void)print
 {
-  NSLog([self getCardString:cardColor andvalue:cardValue]);
+  NSString *string = [self getCardString:cardColor andvalue:cardValue];
+  NSLog(@"%@", string);
 }
 
 -(NSString*)getCardString:(enum Color)c andvalue:(enum Value)v

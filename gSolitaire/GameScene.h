@@ -8,11 +8,8 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "Card.h"
+#import "PileHelpers.h"
 
 @interface GameScene : SKScene
-
--(void)positionDraggedCards:(CGPoint)point;
--(void)makeStackOnTop:(NSMutableArray*)array;
--(void)restoreZPosition:(NSMutableArray*)array;
 
 @end
