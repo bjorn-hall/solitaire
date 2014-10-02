@@ -132,40 +132,31 @@
 
 +(BOOL)isMoveAllowedFrom:(Pile *)fromPile toPile:(Pile*)toPile
 {
-  Card *cardFrom;
-  Card *cardTo;
-
-  cardFrom = [[fromPile getCardArray] firstObject];
-  cardTo = [[toPile getCardArray] lastObject];
+  Card *cardFrom = [[fromPile getCardArray] firstObject];
+  Card *cardTo = [[toPile getCardArray] lastObject];
 
   if(cardFrom == NULL) {
     return FALSE;
   }
 
-  if([toPile getPileType] == HOME_PILE) {
-    if([[toPile getCardArray] count] == 0 && cardFrom.cardValue == Ace) {
-      return TRUE;
-    }
-    if(cardTo.cardColor != cardFrom.cardColor || (cardTo.cardValue+1) != cardFrom.cardValue ) {
-      return FALSE;
-    }
-
-  } else {
-    if(cardTo == NULL && cardFrom.cardValue == King) {
-      return TRUE;
-    }
-
-    if(cardFrom.cardColor == Spade || cardFrom.cardColor == Club) {
-      if(cardTo.cardColor == Spade || cardTo.cardColor == Club) {
-        return FALSE;
-      }
-    }
-
-    if(cardFrom.cardValue != cardTo.cardValue-1) {
-      return FALSE;
-    }
+  if(cardTo == NULL && cardFrom.cardValue == King) {
+    return TRUE;
   }
 
+  if((cardFrom.cardColor == Spade || cardFrom.cardColor == Club) &&
+     (cardTo.cardColor == Spade || cardTo.cardColor == Club)) {
+    return FALSE;
+  }
+
+
+  if((cardFrom.cardColor == Heart || cardFrom.cardColor == Diamond) &&
+     (cardTo.cardColor == Heart || cardTo.cardColor == Diamond)) {
+    return FALSE;
+  }
+
+  if(cardFrom.cardValue != cardTo.cardValue-1) {
+    return FALSE;
+  }
 
   return TRUE;
 }
@@ -192,6 +183,28 @@
 
   [[fromPile getCardArray] removeAllObjects];
   
+}
+
++(Pile*)getAllowedHomePile:(Card*)card inPiles:(NSMutableArray*)array
+{
+  NSEnumerator *enumerator;
+
+  enumerator = [array objectEnumerator];
+
+  Pile *pile;
+
+  while(pile = [enumerator nextObject]) {
+    if([pile getPileType] == HOME_PILE) {
+      Card *cardTo = [[pile getCardArray] lastObject];
+      if(!cardTo && card.cardValue == Ace) {
+        return pile;
+      }
+      if(cardTo.cardColor == card.cardColor && cardTo.cardValue == (card.cardValue+1)) {
+        return pile;
+      }
+    }
+  }
+  return NULL;
 }
 
 

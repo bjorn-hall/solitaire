@@ -21,5 +21,6 @@
 +(NSMutableArray*)dealCardsFromDeck:(NSMutableArray*)array;
 +(BOOL)isMoveAllowedFrom:(Pile *)fromPile toPile:(Pile*)toPile;
 +(void)moveCardsFrom:(Pile *)fromPile toPile:(Pile*)toPile;
++(Pile*)getAllowedHomePile:(Card*)card inPiles:(NSMutableArray*)array;
 
 @end

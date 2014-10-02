@@ -66,7 +66,6 @@
   [DeckSprite setName:@"Deck"];
   [self addChild:DeckSprite];
 
-
   [self addBackground];
 }
 
@@ -242,7 +241,6 @@
     }
   }
 
-
   originPoint = [[[draggedCards getCardArray] objectAtIndex:0] getCardPosition];
   [PileHelpers makePileOnTop:draggedCards];
   [clicked_card print];
@@ -254,18 +252,30 @@
     return;
   }
 
-  // Check if we released card on another pile
-  Card *card = [[draggedCards getCardArray] lastObject];
-  CGPoint point = card.position;
-  Pile *p = [PileHelpers pileFromLocation:point andPiles:piles];
+  Card *card = [[draggedCards getCardArray] firstObject];
+  Pile *destinationPile = originPile; // If we dont find a suitable home pile, return back where we came from
+  CGPoint draggedCardPoint = card.position;
 
-  if(!p || [PileHelpers isMoveAllowedFrom:draggedCards toPile:p] == FALSE) {
-    p = originPile;
+  if([theEvent clickCount] == 2) { // Double click
+    if([[draggedCards getCardArray] count] == 1) { // First criteria is that dragged cards is one and only one
+      Pile *pt = [PileHelpers getAllowedHomePile:card inPiles:piles];
+      if(pt) {
+        destinationPile = pt;
+      }
+    }
+  } else { // Single click
+    Pile *p = [PileHelpers pileFromLocation:draggedCardPoint andPiles:piles];
+
+    if([PileHelpers isMoveAllowedFrom:draggedCards toPile:p]) {
+      destinationPile = p;
+    }
   }
 
-  [PileHelpers moveCardsFrom:draggedCards toPile:p];
+  // Send pile either to allowed pile or back where it came from
+  [PileHelpers moveCardsFrom:draggedCards toPile:destinationPile];
 
-  if([originPile getPileType] == TABLEAU_PILE) {
+  // Turn card if needed
+  if([originPile getPileType] == TABLEAU_PILE && originPile != destinationPile) {
     card = [[originPile getCardArray] lastObject];
     if(card) {
       [card cardTurned:FALSE];
@@ -275,8 +285,6 @@
   draggedCards = NULL;
   return;
 }
-
-
 
 -(void)update:(CFTimeInterval)currentTime {
 }
