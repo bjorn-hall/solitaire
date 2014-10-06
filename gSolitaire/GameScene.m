@@ -208,12 +208,15 @@
   clickOffset = [theEvent locationInNode:clicked_card];
 
   if([clicked_card.name isEqualTo: @"Deck"]) {
-    // deal 3 new cards to waste pile
-    NSLog(@"Dealing 3 new cards to waste pile");
-
     NSMutableArray *array = [PileHelpers dealCardsFromDeck:piles];
     [self addCardsToScene:array];
     [array removeAllObjects];
+
+    if([[[PileHelpers getPileOfType:DECK_PILE inPiles:piles] getCardArray] count] == 0) {
+      [DeckSprite setAlpha:0.2];
+    } else {
+      [DeckSprite setAlpha:1];
+    }
 
     return;
   }
