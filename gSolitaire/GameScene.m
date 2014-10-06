@@ -228,9 +228,14 @@
   Pile *p = [PileHelpers getPileOfType:WASTE_PILE inPiles:piles];
 
   if([p isCardInPile:clicked_card]) {
-    draggedCards = [p getCardsBelow:clicked_card];
-    [draggedCards setPileType:[p getPileType]];
-    originPile = p;
+    if([[p getCardArray] lastObject] == clicked_card) {
+      draggedCards = [p getCardsBelow:clicked_card];
+      [draggedCards setPileType:[p getPileType]];
+      originPile = p;
+    }
+    else {
+      return;
+    }
   } else {
     while(p = [enumerator nextObject]) {
       if([p isCardInPile:clicked_card]) {
