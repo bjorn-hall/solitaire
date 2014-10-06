@@ -125,7 +125,14 @@
     [[[PileHelpers getPileOfType:DECK_PILE inPiles:array] getCardArray] removeObjectAtIndex:0];
     [deltCards addObject:c];
   }
-  [p updatePilePositions];
+
+  [p updateCardPositionsInPile];
+
+  enumerator = [[p getCardArray] objectEnumerator];
+
+  while(c = [enumerator nextObject]) {
+    [c setPosition:[c getCardPosition]];
+  }
 
   return deltCards;
 }
@@ -139,24 +146,40 @@
     return FALSE;
   }
 
-  if(cardTo == NULL && cardFrom.cardValue == King) {
-    return TRUE;
-  }
-
-  if((cardFrom.cardColor == Spade || cardFrom.cardColor == Club) &&
-     (cardTo.cardColor == Spade || cardTo.cardColor == Club)) {
+  if([toPile getPileType] == TABLEAU_PILE) {
+    if(cardTo == NULL && cardFrom.cardValue == King) {
+      return TRUE;
+    }
+    if((cardFrom.cardColor == Spade || cardFrom.cardColor == Club) &&
+       (cardTo.cardColor == Spade || cardTo.cardColor == Club)) {
+      return FALSE;
+    }
+    if((cardFrom.cardColor == Heart || cardFrom.cardColor == Diamond) &&
+       (cardTo.cardColor == Heart || cardTo.cardColor == Diamond)) {
+      return FALSE;
+    }
+    if(cardFrom.cardValue != cardTo.cardValue-1) {
+      return FALSE;
+    }
+  } else if([toPile getPileType] == HOME_PILE) {
+    if([[toPile getCardArray] count] == 0) {
+      return TRUE;
+    }
+    if(cardFrom.cardColor != cardTo.cardColor) {
+      return FALSE;
+    }
+    if(cardFrom.cardValue != (cardTo.cardValue+1)) {
+      return FALSE;
+    }
+  } else {
     return FALSE;
   }
 
 
-  if((cardFrom.cardColor == Heart || cardFrom.cardColor == Diamond) &&
-     (cardTo.cardColor == Heart || cardTo.cardColor == Diamond)) {
-    return FALSE;
-  }
 
-  if(cardFrom.cardValue != cardTo.cardValue-1) {
-    return FALSE;
-  }
+
+
+
 
   return TRUE;
 }
@@ -168,11 +191,11 @@
 
   Card *c;
   SKAction *action;
-  SKAction *postAnimationCode = [SKAction runBlock:^(void){[PileHelpers calculateZPosition:toPile];}];
+  SKAction *postAnimationCode = [SKAction runBlock:^(void){[PileHelpers calculateZPosition:toPile];NSLog(@"Done!");}];
 
   while(c = [enumerator nextObject]) {
     [toPile addCard:c];
-    [toPile updatePilePositions];
+    [toPile updateCardPositionsInPile];
     if(firstObject) {
       action = [SKAction sequence:[NSArray arrayWithObjects:[SKAction moveTo:[c getCardPosition] duration:0.1], postAnimationCode, nil]];
     } else {
@@ -185,6 +208,7 @@
   
 }
 
+/* When double clicking we need to find a suitable home pile */
 +(Pile*)getAllowedHomePile:(Card*)card inPiles:(NSMutableArray*)array
 {
   NSEnumerator *enumerator;
@@ -199,7 +223,7 @@
       if(!cardTo && card.cardValue == Ace) {
         return pile;
       }
-      if(cardTo.cardColor == card.cardColor && cardTo.cardValue == (card.cardValue+1)) {
+      if(cardTo.cardColor == card.cardColor && (cardTo.cardValue+1) == card.cardValue) {
         return pile;
       }
     }

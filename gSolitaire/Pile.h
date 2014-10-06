@@ -28,7 +28,7 @@ enum pileType {
 -(Pile*)getCardsBelow:(Card*)c;
 -(void)setPileType:(enum pileType)pt;
 -(enum pileType)getPileType;
--(void)updatePilePositions;
+-(void)updateCardPositionsInPile;
 -(SKSpriteNode*)getPileBackground;
 
 @end
