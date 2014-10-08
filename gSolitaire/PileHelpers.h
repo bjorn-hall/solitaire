@@ -20,7 +20,8 @@
 +(void)positionPile:(Pile*)pile at:(CGPoint)point;
 +(NSMutableArray*)dealCardsFromDeck:(NSMutableArray*)array;
 +(BOOL)isMoveAllowedFrom:(Pile *)fromPile toPile:(Pile*)toPile;
-+(void)moveCardsFrom:(Pile *)fromPile toPile:(Pile*)toPile;
++(void)moveCardsFrom:(NSUInteger)nbrCards fromPile:(Pile *)fromPile toPile:(Pile*)toPile withDelay:(float)delay andDuration:(float)duration;
 +(Pile*)getAllowedHomePile:(Card*)card inPiles:(NSMutableArray*)array;
++(void)shufflePile:(Pile*)pile;
 
 @end

@@ -175,37 +175,46 @@
     return FALSE;
   }
 
-
-
-
-
-
-
   return TRUE;
 }
 
-+(void)moveCardsFrom:(Pile *)fromPile toPile:(Pile*)toPile
++(void)moveCardsFrom:(NSUInteger)nbrCards fromPile:(Pile *)fromPile toPile:(Pile*)toPile withDelay:(float)delay andDuration:(float)duration
 {
   BOOL firstObject = TRUE;
   NSEnumerator *enumerator = [[fromPile getCardArray] objectEnumerator];
+
+  NSUInteger startPos = [[fromPile getCardArray] count] - nbrCards;
 
   Card *c;
   SKAction *action;
   SKAction *postAnimationCode = [SKAction runBlock:^(void){[PileHelpers calculateZPosition:toPile];NSLog(@"Done!");}];
 
   while(c = [enumerator nextObject]) {
+    if(startPos) {
+      startPos--;
+      continue;
+    }
     [toPile addCard:c];
     [toPile updateCardPositionsInPile];
     if(firstObject) {
-      action = [SKAction sequence:[NSArray arrayWithObjects:[SKAction moveTo:[c getCardPosition] duration:0.1], postAnimationCode, nil]];
+      action = [SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:delay], [SKAction moveTo:[c getCardPosition] duration:duration], postAnimationCode, nil]];
     } else {
-      action = [SKAction moveTo:[c getCardPosition] duration:0.1];
+      action = [SKAction moveTo:[c getCardPosition] duration:duration];
     }
     [c runAction:action];
   }
 
-  [[fromPile getCardArray] removeAllObjects];
-  
+  startPos = [[fromPile getCardArray] count] - nbrCards;
+  enumerator = [[fromPile getCardArray] objectEnumerator];
+
+  while(c = [enumerator nextObject]) {
+    if(startPos) {
+      startPos--;
+      continue;
+    }
+
+    [[fromPile getCardArray] removeObject:c];
+  }
 }
 
 /* When double clicking we need to find a suitable home pile */
@@ -229,6 +238,14 @@
     }
   }
   return NULL;
+}
+
++(void)shufflePile:(Pile*)pile
+{
+  for (int x = 0; x < [[pile getCardArray] count]; x++) {
+    int randInt = (arc4random() % ([[pile getCardArray] count] - x)) + x;
+    [[pile getCardArray] exchangeObjectAtIndex:x withObjectAtIndex:randInt];
+  }
 }
 
 

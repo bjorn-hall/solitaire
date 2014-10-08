@@ -125,7 +125,6 @@
       // All card should be same pos as pile except last 3 which should be x+10 each
       while(card = [enumerator nextObject]) {
         [card setCardPosition:cgp];
-        //[card setPosition:cgp];
         [card setZPosition:i++];
       }
       int j = 0;
@@ -134,7 +133,6 @@
           card = [cards objectAtIndex:i];
           CGPoint cgp = [self getPosition];
 
-         // [card setPosition:CGPointMake(cgp.x+(10*j), cgp.y)];
           [card setCardPosition:CGPointMake(cgp.x+(10*j++), cgp.y)];
         }
       } else {
@@ -142,7 +140,6 @@
           card = [cards objectAtIndex:i];
           CGPoint cgp = [self getPosition];
 
-         // [card setPosition:CGPointMake(cgp.x+(10*i), cgp.y)];
           [card setCardPosition:CGPointMake(cgp.x+(10*i), cgp.y)];
         }
       }
@@ -152,7 +149,6 @@
     {
       while(card = [enumerator nextObject]) {
         [card setCardPosition:cgp];
-        //[card setPosition:cgp];
         [card setZPosition:i++];
       }
     }

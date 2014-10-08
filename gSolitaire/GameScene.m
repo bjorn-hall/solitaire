@@ -38,45 +38,45 @@
   SKSpriteNode *DeckSprite;
 }
 
--(void)didMoveToView:(SKView *)view {
+- (void)didMoveToView:(SKView *)view {
   piles = [[NSMutableArray alloc] init];
 
   [self addPiles];
-
   [self addCardsToDeck];
-
-  for (int x = 0; x < [[[PileHelpers getPileOfType:DECK_PILE inPiles:piles] getCardArray] count]; x++) {
-    int randInt = (arc4random() % ([[[PileHelpers getPileOfType:DECK_PILE inPiles:piles] getCardArray] count] - x)) + x;
-    [[[PileHelpers getPileOfType:DECK_PILE inPiles:piles] getCardArray] exchangeObjectAtIndex:x withObjectAtIndex:randInt];
-  }
-
+  [PileHelpers shufflePile:[PileHelpers getPileOfType:DECK_PILE inPiles:piles]];
   [self dealCards];
-
-  for(Pile *p in piles) {
-    if([p getPileType] == TABLEAU_PILE) {
-      [self addCardsToScene:[p getCardArray]];
-    }
-  }
-
-  DeckSprite = [[SKSpriteNode alloc] initWithImageNamed:@"back"];
-  [DeckSprite setZPosition:0];
-  [DeckSprite setPosition:CGPointMake(100, 675)];
-  // Why does scale 3 make the sprite 1:1 size???
-  [DeckSprite setScale:3];
-  [DeckSprite setName:@"Deck"];
-  [self addChild:DeckSprite];
-
+  [self showDeckBack:TRUE];
   [self addBackground];
 }
 
+- (void)showDeckBack:(BOOL)show
+{
+  if(!DeckSprite) {
+    DeckSprite = [[SKSpriteNode alloc] initWithImageNamed:@"back"];
+    [DeckSprite setZPosition:0];
+    [DeckSprite setPosition:CGPointMake(100, 675)];
+    // Why does scale 3 make the sprite 1:1 size???
+    [DeckSprite setScale:3];
+    [DeckSprite setName:@"Deck"];
+  }
+
+  if(show) {
+    [self addChild:DeckSprite];
+  } else {
+    [DeckSprite removeFromParent];
+  }
+}
 
 - (void)addCardsToDeck {
   Card *c;
+  Pile *deckPile = [PileHelpers getPileOfType:DECK_PILE inPiles:piles];
   for(int color = 0; color < 4; color++) {
     for(int value = 0; value < 13; value++) {
       c = [[Card alloc] initWithCard:color andvalue:value];
+      [c setPosition:[deckPile getPosition]];
       [c setName:@"Card"];
-      [[PileHelpers getPileOfType:DECK_PILE inPiles:piles] addCard:c];
+      [self addCardToScene:c];
+      [deckPile addCard:c];
     }
   }
 }
@@ -106,26 +106,24 @@
   }
 
   for(int i = 0; i < NUMBER_OF_DECK_PILES; i++) {
-    p = [[Pile alloc] initWithPosition:CGPointMake(220+(i*120), Y_POSITION_DECK_PILES)];
+    p = [[Pile alloc] initWithPosition:CGPointMake(-100, -100)];
     [p setPileType:DECK_PILE];
     [piles addObject:p];
     [self addChild:[p getPileBackground]];
   }
 }
 
-// TODO: This function is too big and ugly, hard to follow..
 - (void)dealCards {
-  SKAction *action;
-  SKAction *delay_action;
-  SKAction *sequence_action;
   BOOL firstCard = TRUE;
+  Pile *deckPile = [PileHelpers getPileOfType:DECK_PILE inPiles:piles];
+  Pile *p;
   float delay = 0;
 
   for(int i = 0; i < NUMBER_OF_PILES; i++) {
     firstCard = TRUE;
     NSEnumerator *enumerator = [piles objectEnumerator];
-    Pile *p;
 
+    /* Skip one more tableau pile each row */
     for(int j = 0; j < i; j++) {
       p = [enumerator nextObject];
       while([p getPileType] != TABLEAU_PILE) {
@@ -138,33 +136,11 @@
       if([p getPileType] != TABLEAU_PILE) {
         continue;
       }
+      [PileHelpers moveCardsFrom:1 fromPile:deckPile toPile:p withDelay:delay andDuration:0.2];
+      delay += 0.1;
 
-      Card *c = [[[PileHelpers getPileOfType:DECK_PILE inPiles:piles] getCardArray] firstObject];
-
-      CGPoint cgp = [p getPosition];
-
-      cgp.y -= i*Y_OFFSET;
-
-      /* TODO: Is this the best way to handle this? */
-      c.zPosition = Y_POSITION_PILES-cgp.y;
-
-      c.position = CGPointMake(-100,-100); // Put card here
-      [c setCardPosition:cgp]; // And animate to here
-      [[[PileHelpers getPileOfType:DECK_PILE inPiles:piles] getCardArray] removeObjectAtIndex:0];
-
-      if(firstCard) {
-        [c cardTurned:FALSE];
-        firstCard = FALSE;
-      } else {
-        [c cardTurned:TRUE];
-      }
-
-      [p addCard:c];
-      action = [SKAction moveTo:cgp duration:0.5];
-      delay_action = [SKAction waitForDuration:delay];
-      sequence_action = [SKAction sequence:[NSArray arrayWithObjects:delay_action, action, nil]];
-      delay += 0.05;
-      [c runAction:sequence_action];
+      [(Card*)[[p getCardArray] lastObject] cardTurned:!firstCard];
+      firstCard = FALSE;
     }
   }
 }
@@ -177,7 +153,7 @@
   [self addChild:background];
 }
 
--(void)mouseDragged:(NSEvent *)theEvent
+- (void)mouseDragged:(NSEvent *)theEvent
 {
   if (!draggedCards) {
     return;
@@ -188,7 +164,12 @@
   [PileHelpers positionPile:draggedCards at:currentPosition];
 }
 
--(void)addCardsToScene:(NSMutableArray*)cards
+- (void)addCardToScene:(Card*)card
+{
+  [self addChild:card];
+}
+
+- (void)addCardsToScene:(NSMutableArray*)cards
 {
   Card *card;
   NSEnumerator *enumerator = [cards objectEnumerator];
@@ -198,7 +179,7 @@
   }
 }
 
--(void)mouseDown:(NSEvent *)theEvent {
+- (void)mouseDown:(NSEvent *)theEvent {
   Card *clicked_card;
   CGPoint clicked_position;
 
@@ -249,12 +230,12 @@
     }
   }
 
-  originPoint = [[[draggedCards getCardArray] objectAtIndex:0] getCardPosition];
+  originPoint = [[[draggedCards getCardArray] firstObject] getCardPosition];
   [PileHelpers makePileOnTop:draggedCards];
   [clicked_card print];
 }
 
--(void)mouseUp:(NSEvent *)theEvent
+- (void)mouseUp:(NSEvent *)theEvent
 {
   if (!draggedCards) {
     return;
@@ -280,7 +261,7 @@
   }
 
   // Send pile either to allowed pile or back where it came from
-  [PileHelpers moveCardsFrom:draggedCards toPile:destinationPile];
+  [PileHelpers moveCardsFrom:[[draggedCards getCardArray]count] fromPile:draggedCards toPile:destinationPile withDelay:0 andDuration:0.1];
 
   // Turn card if needed
   if([originPile getPileType] == TABLEAU_PILE && originPile != destinationPile) {
@@ -294,7 +275,7 @@
   return;
 }
 
--(void)update:(CFTimeInterval)currentTime {
+- (void)update:(CFTimeInterval)currentTime {
 }
 
 @end
